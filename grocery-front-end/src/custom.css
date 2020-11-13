@@ -1,12 +1,17 @@
 .commonItems {
-    margin: 2em 1em 0 0;
+    margin: 1em 1em 0 0;
+} 
+
+.margin-fix {
+    margin-top: 1em;
+    margin-bottom: 1em;
 }
 
-.container {
+/* .container {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
     min-height: 100vh;
-}
+} */

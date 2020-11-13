@@ -2,9 +2,33 @@ import React, { useState , useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
 import './custom.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Button from 'react-bootstrap/button';
+import Form from 'react-bootstrap/form';
+
+// Ultimately, I'd like to abstract this list to the DB with a frontend that allows users to update the commons items.
+const commonItems = [
+  "Bacon",
+  "Eggs",
+  "Cereal",
+  "Greens",
+  "Cheese",
+  "Chips",
+  "Coffee",
+  "Tea",
+  "Cream Cheese",
+  "Deli Meats",
+  "Cured Meats",
+  "Bread",
+  "Bagels",
+  "Ice Cream",
+  "Pasta",
+  "Red Sauce",
+  "White Sauce"
+]
 
 /// DETERMINES WHERE AXIOS QUERIES INFO ///
-const baseUrl = 'http://localhost:3001/api'
+const baseUrl = '/api'
 
 const App = () => {
   const [newItem, setNewItem] = useState('')
@@ -18,6 +42,7 @@ const App = () => {
   useEffect(() => getGroceryList(), [])
 
   const handleNewItem = (event) => {
+    console.log(event.target.value)
     setNewItem(event.target.value)
   }
 
@@ -50,28 +75,23 @@ const App = () => {
 
   return (
     <div className="container">
-    <form onSubmit={addCustomItem}>
-      <label>Item: </label>
-      <input value={newItem} onChange={handleNewItem} />
-      <button type="submit">Add item</button>
-    </form>
-    <button className="commonItems" onClick={addCommonItem}>Bacon</button>
-    <button className="commonItems" onClick={addCommonItem}>Eggs</button>
-    <button className="commonItems" onClick={addCommonItem}>Cereal</button>
-    <button className="commonItems" onClick={addCommonItem}>Greens</button>
-    <button className="commonItems" onClick={addCommonItem}>Cheese</button>
-    <button className="commonItems" onClick={addCommonItem}>Chips</button>
-    <button className="commonItems" onClick={addCommonItem}>Coffee</button>
-    <button className="commonItems" onClick={addCommonItem}>Tea</button>
-    <button className="commonItems" onClick={addCommonItem}>Cream Cheese</button>
-    <button className="commonItems" onClick={addCommonItem}>Deli Meats</button>
-    <button className="commonItems" onClick={addCommonItem}>Cured Meats</button>
-    <button className="commonItems" onClick={addCommonItem}>Bread</button>
-    <button className="commonItems" onClick={addCommonItem}>Bagels</button>
+    <Form onSubmit={addCustomItem}>
+      <Form.Group controlId="formAddItem">
+        <Form.Control value={newItem} type="item" placeholder="Enter grocery item" onChange={handleNewItem} />
+      </Form.Group>
+      <Button variant="dark" size="lg" type="submit" block>
+        Add Item
+      </Button>
+    </Form>
+    <br />
+    
+    {commonItems.map(item => {
+      return <Button variant="dark" size="lg" className="commonItems" onClick={addCommonItem} block>{item}</Button>
+    })}
 
-    <h1>Grocery List</h1>
+    <h1 className="margin-fix">Grocery List</h1>
     {groceryList.map(item => {
-      return <p key={item.id}>{item.item} <button onClick={() => deleteItem(item.id)}>Delete</button></p>
+      return <h5 key={item.id}>{item.item} <Button variant="dark" size="lg" onClick={() => deleteItem(item.id)}>Delete</Button></h5>
     })}
     </div>
   )
