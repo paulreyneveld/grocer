@@ -1,10 +1,11 @@
+require('dotenv').config()
 const express = require('express')
 const app = express()
 require('express-async-errors')
 const cors = require('cors')
 const mongoose = require('mongoose');
 
-const url = `mongodb+srv://dbUser:efg293@cluster0.wszyx.mongodb.net/items?retryWrites=true&w=majority`
+const url = `mongodb+srv://dbUser:${process.env.DB_PASSWORD}@cluster0.wszyx.mongodb.net/items?retryWrites=true&w=majority`
 
 mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, useCreateIndex: true })
     .then(result => console.log('Connected to DB'))
